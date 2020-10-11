@@ -14,6 +14,10 @@ class Vector{
         return x == v.x && y == v.y && z == v.z;
     }
 
+    public boolean appxEquals(Vector v) {
+        return Math.abs(x - v.x) <= 0.00001 && Math.abs(y - v.y) <= 0.00001 && Math.abs(z - v.z) <= 0.00001;
+    }
+
     /*public int hashCode()   {
         return (int) (x + y + z);
     }*/
@@ -29,6 +33,14 @@ class Vector{
     public void normalize() {
         if (mag() != 0) {
             into(1/mag());
+        }
+    }
+
+    public static Vector normalized(Vector v) {
+        if (v.mag() != 0) {
+            return mult(v, 1/v.mag());
+        }else {
+            return v.copy();
         }
     }
 
