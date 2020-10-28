@@ -4,15 +4,15 @@ import java.util.Comparator;
 
 boolean displayVertices = false;
 boolean displayEdges = true;
-int precision = 16;
-float speed = 0.02;
-enum Arrangement {Cube, Cube_Cut, Tetrahedron, Tetrahedron_Cut};
-Arrangement arrangement = Arrangement.Tetrahedron_Cut;
+int precision = 12;
+float speed = 0.04;
+enum Arrangement {Cube, Cube_Cut, Tetrahedron, Tetrahedron_Cut, Octahedron, Octahedron_Cut};
+Arrangement arrangement = Arrangement.Octahedron;
 
 Vector[] origin = {new Vector(300, 300, 0), new Vector(900, 300, 0)};
 int[] scale = {180, 90};
 
-Vector cX, cY, cZ;
+CameraOrthographic cam;
 
 //order -> UP, RIGHT, DOWN, LEFT
 boolean[] isKeyOn = new boolean[] {false, false, false, false};
@@ -24,9 +24,11 @@ void setup()	{
 	size(1200, 600);
 	//noSmooth();
 
-	cX = new Vector(1, 0, 0);
-	cY = new Vector(0, 1, 0);
-	cZ = new Vector(0, 0, 1);
+	cam = new CameraOrthographic(
+		new Vector(1, 0, 0), 
+		new Vector(0, 1, 0), 
+		new Vector(0, 0, 1)
+	);
 
 	if (displayVertices) {
 		switch (arrangement) {
@@ -41,6 +43,12 @@ void setup()	{
 				break;
 			case Tetrahedron_Cut:
 				vertices = TetrahedralCoordinates.getCutVertices(precision);
+				break;
+			case Octahedron:
+				vertices = OctahedralCoordinates.getVertices(precision);
+				break;
+			case Octahedron_Cut:
+				vertices = OctahedralCoordinates.getCutVertices(precision);
 				break;
 		}
 		//println("vertices: " + vertices.size());
@@ -59,6 +67,12 @@ void setup()	{
 			case Tetrahedron_Cut:
 				edges = TetrahedralCoordinates.getCutEdges(precision);
 				break;
+			case Octahedron:
+				edges = OctahedralCoordinates.getEdges(precision);
+				break;
+			case Octahedron_Cut:
+				edges = OctahedralCoordinates.getCutEdges(precision);
+				break;
 		}
 		//println("edges: " + edges.size());
 	}
@@ -71,32 +85,16 @@ void draw()	{
 	Vector input = new Vector(x, y, 0);
 	input.normalize();
 	input.into(speed);
-	Vector inputX = new Vector(input.x, 0, 0);
-	Vector inputY = new Vector(0, input.y, 0);
 
-	float[][] M = Matrix.inverse33(Matrix.getTransformationalMatrixXYZ(cX, cY, cZ));
-	if (input.x != 0) {
-		inputX = Matrix.vXm33(inputX, M);
-		cZ.plus(inputX);
-		cZ.normalize();
-		cX = Vector.cross(cY, cZ);
-		cX.normalize();
-	}
-	if (input.y != 0) {
-		inputY = Matrix.vXm33(input, M);
-		cZ.plus(inputY);
-		cZ.normalize();
-		cY = Vector.cross(cZ, cX);
-		cY.normalize();
-	}
+	cam.move(input);
 
-    M = Matrix.getTransformationalMatrixXYZ(cX, cY, cZ);
+	float[][] M = cam.getTransformationalMatrix();
 
     ArrayList<Coordinates.Vertex> verticesTransformed = new ArrayList();
     ArrayList<Coordinates.Vertex> verticesProjected = new ArrayList();
     if (displayVertices) {
 	    for (Coordinates.Vertex vertex : vertices) {
-	    	Vector v = Matrix.vXm33(vertex.v, M);
+	    	Vector v = Matrix.vXm33(M, vertex.v);
 	    	if (v.z >= -0.2) {
 	    		verticesTransformed.add(new Coordinates.Vertex(v, vertex.c));
 	    	}
@@ -121,8 +119,8 @@ void draw()	{
     ArrayList<Coordinates.Edge> edgesProjected = new ArrayList();
     if (displayEdges) {
 	    for (Coordinates.Edge edge : edges) {
-	    	Vector v1 = Matrix.vXm33(edge.v1, M);
-	    	Vector v2 = Matrix.vXm33(edge.v2, M);
+	    	Vector v1 = Matrix.vXm33(M, edge.v1);
+	    	Vector v2 = Matrix.vXm33(M, edge.v2);
 	    	if (v1.z + v2.z >= -0.2) {
 	    		edgesTransformed.add(new Coordinates.Edge(v1, v2, edge.c));
 	    	}

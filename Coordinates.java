@@ -3,13 +3,26 @@ import java.util.ArrayList;
 class Coordinates	{
 
 	static Colour[] colours = new Colour[] {
-		new Colour(255, 125, 125), 
-		new Colour(125, 255, 125), 
-		new Colour(125, 125, 255), 
-		new Colour(0, 255, 255), 
-		new Colour(255, 0, 255), 
-		new Colour(255, 255, 0), 
-		new Colour(255, 255, 255)};
+		new Colour(255, 25, 25),	//Red
+		new Colour(25, 255, 25),	//Green
+		new Colour(25, 25, 255),	//Blue
+
+		new Colour(25, 255, 255),	//Cyan
+		new Colour(255, 25, 255),	//Magenta
+		new Colour(255, 255, 25),	//Yellow
+
+		new Colour(255, 125, 25),	//Orange
+		new Colour(125, 255, 25),	//Yellow - Green
+		new Colour(25, 255, 125),	//Cyan - Green
+		new Colour(25, 125, 225),	//Cyan - Blue
+		new Colour(125, 25, 255),	//Purple
+		new Colour(255, 25, 125),	//Magenta - Red
+
+		new Colour(255, 125, 125),	//Soft Red
+		new Colour(125, 255, 125),	//Soft Green
+		new Colour(125, 125, 255),	//Soft Blue
+
+		new Colour(255, 255, 255)};	//White
 
 	static class Colour{
 		int r, g, b;

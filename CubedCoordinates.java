@@ -35,7 +35,7 @@ class CubedCoordinates	{
 
 					if (!contains) {
 						if (u == 0 || v == 0 || u == n || v == n) {
-							vertices.add(new Coordinates.Vertex(p, Coordinates.colours[6]));
+							vertices.add(new Coordinates.Vertex(p, Coordinates.colours[Coordinates.colours.length - 1]));
 						}else {
 							vertices.add(new Coordinates.Vertex(p, Coordinates.colours[i]));
 						}
@@ -86,7 +86,7 @@ class CubedCoordinates	{
 					}
 					if (!contains) {
 						if (u == 0 || u == n) {
-							edges.add(new Coordinates.Edge(p1, p2, Coordinates.colours[6]));
+							edges.add(new Coordinates.Edge(p1, p2, Coordinates.colours[Coordinates.colours.length - 1]));
 						}else {
 							edges.add(new Coordinates.Edge(p1, p2, Coordinates.colours[i]));
 						}
@@ -101,7 +101,7 @@ class CubedCoordinates	{
 					}
 					if (!contains) {
 						if (u == 0 || u == n) {
-							edges.add(new Coordinates.Edge(p3, p4, Coordinates.colours[6]));
+							edges.add(new Coordinates.Edge(p3, p4, Coordinates.colours[Coordinates.colours.length - 1]));
 						}else {
 							edges.add(new Coordinates.Edge(p3, p4, Coordinates.colours[i]));
 						}
@@ -137,7 +137,7 @@ class CubedCoordinates	{
 					p.normalize();
 
 					if (u == 0 || v == 0 || u == n || v == n) {
-						vertices.add(new Coordinates.Vertex(p, Coordinates.colours[6]));
+						vertices.add(new Coordinates.Vertex(p, Coordinates.colours[Coordinates.colours.length - 1]));
 					}else {
 						vertices.add(new Coordinates.Vertex(p, Coordinates.colours[i]));
 					}
@@ -179,13 +179,13 @@ class CubedCoordinates	{
 					p4.normalize();
 
 					if (u == 0 || u == n) {
-						edges.add(new Coordinates.Edge(p1, p2, Coordinates.colours[6]));
+						edges.add(new Coordinates.Edge(p1, p2, Coordinates.colours[Coordinates.colours.length - 1]));
 					}else {
 						edges.add(new Coordinates.Edge(p1, p2, Coordinates.colours[i]));
 					}
 
 					if (u == 0 || u == n) {
-						edges.add(new Coordinates.Edge(p3, p4, Coordinates.colours[6]));
+						edges.add(new Coordinates.Edge(p3, p4, Coordinates.colours[Coordinates.colours.length - 1]));
 					}else {
 						edges.add(new Coordinates.Edge(p3, p4, Coordinates.colours[i]));
 					}
