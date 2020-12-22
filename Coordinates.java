@@ -22,6 +22,18 @@ class Coordinates	{
 		new Colour(125, 255, 125),	//Soft Green
 		new Colour(125, 125, 255),	//Soft Blue
 
+		new Colour(125, 255, 255),	//Soft Cyan
+		new Colour(255, 125, 255),	//Soft Magenta
+		new Colour(255, 255, 125),	//Soft Yellow
+
+		new Colour(125, 12, 12),	//Hard Red
+		new Colour(12, 125, 25),	//Hard Green
+		new Colour(12, 12, 125),	//Hard Blue
+
+		new Colour(12, 125, 125),	//Hard Cyan
+		new Colour(125, 12, 125),	//Hard Magenta
+		new Colour(125, 125, 12),	//Hard Yellow
+
 		new Colour(255, 255, 255)};	//White
 
 	static class Colour{

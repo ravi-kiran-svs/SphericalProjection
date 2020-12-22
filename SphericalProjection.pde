@@ -4,10 +4,10 @@ import java.util.Comparator;
 
 boolean displayVertices = false;
 boolean displayEdges = true;
-int precision = 12;
+int precision = 6;
 float speed = 0.04;
-enum Arrangement {Cube, Cube_Cut, Tetrahedron, Tetrahedron_Cut, Octahedron, Octahedron_Cut};
-Arrangement arrangement = Arrangement.Octahedron;
+enum Arrangement {Cube, Cube_Cut, Tetrahedron, Tetrahedron_Cut, Octahedron, Octahedron_Cut, Icosahedron, Icosahedron_Cut};
+Arrangement arrangement = Arrangement.Icosahedron_Cut;
 
 Vector[] origin = {new Vector(300, 300, 0), new Vector(900, 300, 0)};
 int[] scale = {180, 90};
@@ -27,7 +27,8 @@ void setup()	{
 	cam = new CameraOrthographic(
 		new Vector(1, 0, 0), 
 		new Vector(0, 1, 0), 
-		new Vector(0, 0, 1)
+		new Vector(0, 0, 1), 
+		speed
 	);
 
 	if (displayVertices) {
@@ -49,6 +50,12 @@ void setup()	{
 				break;
 			case Octahedron_Cut:
 				vertices = OctahedralCoordinates.getCutVertices(precision);
+				break;
+			case Icosahedron:
+				vertices = IcosahedralCoordinates.getVertices(precision);
+				break;
+			case Icosahedron_Cut:
+				vertices = IcosahedralCoordinates.getCutVertices(precision);
 				break;
 		}
 		//println("vertices: " + vertices.size());
@@ -73,6 +80,12 @@ void setup()	{
 			case Octahedron_Cut:
 				edges = OctahedralCoordinates.getCutEdges(precision);
 				break;
+			case Icosahedron:
+				edges = IcosahedralCoordinates.getEdges(precision);
+				break;
+			case Icosahedron_Cut:
+				edges = IcosahedralCoordinates.getCutEdges(precision);
+				break;
 		}
 		//println("edges: " + edges.size());
 	}
@@ -84,7 +97,6 @@ void draw()	{
 	int y = (isKeyOn[0]? 1: 0) - (isKeyOn[2]? 1: 0);
 	Vector input = new Vector(x, y, 0);
 	input.normalize();
-	input.into(speed);
 
 	cam.move(input);
 
